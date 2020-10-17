@@ -1,0 +1,7 @@
+router.post("/user/register")
+router.post("/user/login")
+router.post("/log")
+router.get("/log")
+router.get("/log/:id")
+router.put("/log/:id")
+router.delete("/log/:id")
