@@ -15,7 +15,7 @@ database.authenticate()
     // after initilzations    
     .then(() => {
         console.log(`Connected to the ${process.env.DB_NAME} database.`)
-        database.sync()
+        database.sync({force: true})
     })
 
 // middleware: tells our application to parse requsts as JSON
@@ -39,6 +39,6 @@ app.use("/api", routes(router))
 
 
 // our server application is running
-app.listen(process.env.DB_PORT, function() {
-    console.log(`Application running on ${process.env.DB_HOST}:${process.env.DB_PORT}`)
+app.listen(process.env.SERVER_PORT, function() {
+    console.log(`Application running on ${process.env.DB_HOST}:${process.env.SERVER_PORT}`)
 })
