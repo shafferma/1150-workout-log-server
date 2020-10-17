@@ -23,6 +23,21 @@ app.use(express.json());
 //tells our application what "request headers" are allowed
 app.use(require("./middleware/headers"));
 
+/**
+ Setup our router, this handles our "endpoints".
+ Our endpoints to Controller functions
+ Our controllers use our models.
+ Models interact with the DB.
+*/
+
+//create our router
+router = express.Router()
+//import our router
+const routes = require("./routes")
+//register our routes
+app.use("/api", routes(router))
+
+
 // our server application is running
 app.listen(process.env.DB_PORT, function() {
     console.log(`Application running on ${process.env.DB_HOST}:${process.env.DB_PORT}`)
