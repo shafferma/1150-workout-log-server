@@ -19,6 +19,8 @@ module.exports = {
             }).then((user) => {
                 // generate a session token using the newly created user object
                 const token = Session.generateToken(user)
+
+                
                 // respond to the request with the following info
                 response.send({
                     user: user,
@@ -26,10 +28,6 @@ module.exports = {
                     sessionToken: token
                 })
             })
-
-            console.log({username, password})
-            response.send({username, password})
-
 
         } catch(error) {
             response.send(500, "Error")
