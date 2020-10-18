@@ -1,0 +1,7 @@
+![Alt text](./../screenshots/log-create.png "Optional Title")
+![Alt text](./../screenshots/log-deleted.png "Optional Title")
+![Alt text](./../screenshots/log-updated.png "Optional Title")
+![Alt text](./../screenshots/log-by-id.png "Optional Title")
+![Alt text](./../screenshots/log-logs.png "Optional Title")
+![Alt text](./../screenshots/user-login.png "Optional Title")
+![Alt text](./../screenshots/user-register.png "Optional Title")
