@@ -23,6 +23,7 @@ app.use(express.json());
 //tells our application what "request headers" are allowed
 app.use(require("./middleware/headers"));
 
+
 /**
  Setup our router, this handles our "endpoints".
  Our endpoints to Controller functions
@@ -30,12 +31,23 @@ app.use(require("./middleware/headers"));
  Models interact with the DB.
 */
 
-//create our router
-router = express.Router()
-//import our router
-const routes = require("./routes")
-//register our routes
-app.use("/api", routes(router))
+// create our routers
+const publicRouter = express.Router()
+const privateRouter = express.Router()
+
+// import our routers
+const publicRoutes = require("./routes/public")
+const privateRoutes = require("./routes/private")
+
+// register our public routes using our public router
+app.use("/api", publicRoutes(publicRouter))
+ 
+// register our "validate-session" middleware on our private 
+// router the following routes will require a token
+privateRouter.use(require('./middleware/validate-session'))
+
+// register our private routes with our private router
+app.use("/api", privateRoutes(privateRouter))
 
 
 // our server application is running
