@@ -15,7 +15,7 @@ database.authenticate()
     // after initilzations    
     .then(() => {
         console.log(`Connected to the ${process.env.DB_NAME} database.`)
-        database.sync({force: true})
+        database.sync()
     })
 
 // middleware: tells our application to parse requsts as JSON

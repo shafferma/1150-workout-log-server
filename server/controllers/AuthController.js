@@ -1,43 +1,50 @@
-/***
 const DB = require("../db")
 const User = DB.import("../model/user")
 const Session = require("../utls/session")
 const Password = require("../utls/password")
 
- */
+const INCORRECT_CREDENTIALS = "The user does not exist or the credentials were not correct.";
 
 module.exports = {
+    // handles our "user logic"
     login: function(request, response){
-        console.log("login")
-        response.send("logged in")
-
-        /**
-         *  try { bcrypt.compare()
+        try {
             const {username, password} = request.body.user
-            //user did not provide their username and password
-            if (user) {
-                response.send(400, "Provide username and password")
-            }
 
-            User.findOne({
-                username: username,
-                passwordhash: Password.hash(password)
+            User.findOne({ 
+                where: {
+                    username: username
+                }
             }).then((user) => {
-                // generate a session token using the newly created user object
-                const token = Session.generateToken(user)
+                console.log("Found User")
 
-                
-                // respond to the request with the following info
-                response.send({
-                    user: user,
-                    message: "Account registered",
-                    sessionToken: token
-                })
+                // check that the user provided the correct password
+                Password.compare(password, user.passwordhash)
+                    .then((isSamePassword) => {
+                        console.log('Check provided password', {isSamePassword})
+                        if (!isSamePassword) {
+                            response.send(401).send(INCORRECT_CREDENTIALS)
+                        }
+
+                        // logic to handle the token and response
+                        
+                        response.json({
+                            user: user,
+                            message: "successfully authenticated",
+                            sessionToken: Session.generateToken(user)
+                        });
+
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                        response.status(401).send(INCORRECT_CREDENTIALS)
+                    })
             })
-
+        
         } catch(error) {
-            response.send(500, "Error")
+            // this error is only sent if there is a problem with our logic above
+            response.status(500).send("Server error")
         }
-         */
+        
     }
 }
