@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 /** 
- * create instance of axious. 
+ * create instance of axios. 
  * set our base url and headers so we dont have to repeat our code*/
 
 const ApiProvider = axios.create({
@@ -18,7 +18,7 @@ const ApiProvider = axios.create({
 
  ApiProvider.interceptors.request.use(config => {
     const token = localStorage.getItem('token')
-    if(token ) {
+    if (token) {
         config.headers['token'] = token
     }
     return config
