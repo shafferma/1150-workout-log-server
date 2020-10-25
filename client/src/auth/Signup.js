@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
+import { apiBaseUrl } from '../config/api';
 
 const Signup = (props) => {
     const [username, setUsername] = useState('');
@@ -7,7 +8,7 @@ const Signup = (props) => {
 
     let handleSubmit = (event) => {
         event.preventDefault();
-        fetch("http://localhost:3000/user/register", {
+        fetch(`${apiBaseUrl}/user/register`, {
             method: 'POST',
             body: JSON.stringify({user:{username: username, password: password}}),
             headers: new Headers({

@@ -7,6 +7,9 @@ const express = require("express")
 // create our server application
 const app = express();
 
+const cors = require("cors");
+app.use(cors())
+
 //import our database 
 const database = require("./db")
 

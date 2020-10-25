@@ -3,22 +3,38 @@ import {Container, Row, Col, Button} from 'reactstrap';
 import WorkoutCreate from './WorkoutCreate';
 import WorkoutTable from './WorkoutTable';
 import WorkoutEdit from './WorkoutEdits';
+import { apiBaseUrl } from '../config/api';
 
 const WorkoutIndex = (props) => {
     
     const [workouts, setWorkouts] = useState([]);
+    const [updateActive, setUpdateActive] = useState(false);
+    const [workoutToUpdate, setWorkoutToUpdate] = useState({});
 
     const fetchWorkouts = () => {
-        fetch('http://localhost:3000/log', {
+        fetch(`${apiBaseUrl}/log`, {
             method: 'GET',
             headers: new Headers ({
                 'Content-Type' : 'application/json',
                 'Authorization': props.token
             })
         }) .then((res) => res.json())
-        .then((logData) => {
-            setWorkouts(logData)
+        .then((response) => {
+            setWorkouts(response.data)
         })
+    }
+
+    const editUpdateWorkout = (workout) => {
+        setWorkoutToUpdate(workout);
+        console.log(workout);
+    }
+
+    const updateOn = () => {
+        setUpdateActive(true);
+    }
+
+    const updateOff = () => {
+        setUpdateActive(false);
     }
 
     useEffect(() => {
@@ -34,9 +50,12 @@ const WorkoutIndex = (props) => {
                  <WorkoutCreate fetchWorkouts={fetchWorkouts} token={props.token}/>
               </Col>
               <Col md="9">
-                 <WorkoutTable workouts={workouts} fetchWorkouts={fetchWorkouts}
+                 <WorkoutTable workouts={workouts} editUpdateWorkout={editUpdateWorkout}
+                 updateOn={updateOn} fetchWorkouts={fetchWorkouts}
                  token={props.token}/>
               </Col>
+              {updateActive ? <WorkoutEdit workoutToUpdate={workoutToUpdate}
+              updateOff={updateOff} token={props.token} fetchWorkouts={fetchWorkouts}/> : <></>}
           </Row>
       </Container>
     )

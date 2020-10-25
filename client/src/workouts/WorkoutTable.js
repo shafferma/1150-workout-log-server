@@ -14,6 +14,7 @@ const WorkoutTable = (props) => {
     }
 
     const workoutMapper = (props)  => {
+        console.log(props)
         return props.workouts.map((workout, index) => {
             return(
                 <tr key={index}>
@@ -22,7 +23,7 @@ const WorkoutTable = (props) => {
                     <td>{workout.description}</td>
                     <td>{workout.definition}</td>
                     <td>
-                        <Button color="warning">Update</Button>
+                        <Button color="warning" onClick={() => {props.updateOn()}}>Update</Button>
                         <Button onClick={() => {deleteWorkout(workout)}}>Delete</Button>
                     </td>
                 </tr>
@@ -44,7 +45,7 @@ const WorkoutTable = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {workoutMapper()}
+                {workoutMapper(props)}
             </tbody>
         </Table>
         </>
