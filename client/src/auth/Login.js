@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
-import { apiBaseUrl } from '../config/api';
-
+import ApiProvider from '../utils/ApiProvider';
 
 const Login = (props) => {
     const [username, setUsername] = useState('');
@@ -9,16 +8,14 @@ const Login = (props) => {
 
     let handleSubmit = (event) => {
         event.preventDefault();
-        fetch(`${apiBaseUrl}/user/login`, {
-            method: 'POST',
-            body: JSON.stringify({user:{username: username, password: password}}),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        }).then(
-            (response) => response.json()
-        ).then((data) => {
-            props.updateToken(data.sessionToken)
+       
+     ApiProvider.post('/user/login', {
+         user: { 
+             username,
+             password
+         }
+     }).then((response) => {
+            props.updateToken(response.data.sessionToken)
         })
     }
     return (

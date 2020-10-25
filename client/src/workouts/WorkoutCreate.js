@@ -1,32 +1,51 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import ApiProvider from '../utils/ApiProvider';
 
 const WorkoutCreate = (props) => {
-    const [descripton, setDescription] = useState('');
-    const [definition, setDefinition] = useState('');
+    const [description, setDescription] = useState('');
+    const [definition, setDefinition] = useState('Time');
     const [result, setResult] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch('http://localhost:3000/log/', {
-            method: 'POST',
-            body: JSON.stringify({log:{descripton: descripton, definition: definition, result: result}}),
-            headers: new Headers({
-                'Content-Type' : 'application/json',
-                'Authorization': props.token
-            })
-        }) .then((res) => res.json())
+        ApiProvider.post('/log', {
+            description: description, 
+            definition: definition, 
+            result: result
+        })
         .then((logData) => {
             console.log(logData);
             setDescription('');
-            setDefinition('');
+            setDefinition('Time');
             setResult('');
             props.fetchWorkouts();
         })
     }
 
     return (
-        <p>Workout Create Comp</p>
+       <>
+            <h3>Log a Workout</h3>
+                <Form onSubmit={handleSubmit}>
+                    <FormGroup>
+                        <Label htmlFor="description">Description</Label>
+                        <Input name="description" value={description} onChange={(e) => setDescription(e.target.value)}/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label htmlFor="definiton">Definition</Label>
+                        <Input type="select" name="definition" value={definition} onChange={(e) => setDefinition(e.target.value)}>
+                            <option value="Time">Time</option>
+                            <option value="Weight">Weight</option>
+                            <option value="Distance">Distance</option>
+                        </Input>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label htmlFor="result">Result</Label>
+                        <Input name="result" value={result} onChange={(e) => setResult(e.target.value)}/>
+                    </FormGroup>
+                    <Button type="submit" >Click to submit</Button>
+                </Form>
+       </>
     )
 }
 

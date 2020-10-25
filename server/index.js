@@ -7,6 +7,7 @@ const express = require("express")
 // create our server application
 const app = express();
 
+// allows client to make calls to api server
 const cors = require("cors");
 app.use(cors())
 

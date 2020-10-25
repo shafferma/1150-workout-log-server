@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {Container, Row, Col, Button} from 'reactstrap';
+import {Container, Row, Col} from 'reactstrap';
 import WorkoutCreate from './WorkoutCreate';
 import WorkoutTable from './WorkoutTable';
 import WorkoutEdit from './WorkoutEdits';
-import { apiBaseUrl } from '../config/api';
+import ApiProvider from '../utils/ApiProvider';
 
 const WorkoutIndex = (props) => {
     
@@ -12,15 +12,9 @@ const WorkoutIndex = (props) => {
     const [workoutToUpdate, setWorkoutToUpdate] = useState({});
 
     const fetchWorkouts = () => {
-        fetch(`${apiBaseUrl}/log`, {
-            method: 'GET',
-            headers: new Headers ({
-                'Content-Type' : 'application/json',
-                'Authorization': props.token
-            })
-        }) .then((res) => res.json())
-        .then((response) => {
-            setWorkouts(response.data)
+        ApiProvider.get('/log')
+        .then(response => {
+            setWorkouts(response.data.data)
         })
     }
 
@@ -41,21 +35,31 @@ const WorkoutIndex = (props) => {
         fetchWorkouts();
     }, [])
 
-
-
     return(
       <Container>
           <Row>
               <Col md="3">
-                 <WorkoutCreate fetchWorkouts={fetchWorkouts} token={props.token}/>
+                 <WorkoutCreate 
+                    fetchWorkouts={fetchWorkouts} 
+                    token={props.token}
+                 />
               </Col>
               <Col md="9">
-                 <WorkoutTable workouts={workouts} editUpdateWorkout={editUpdateWorkout}
-                 updateOn={updateOn} fetchWorkouts={fetchWorkouts}
-                 token={props.token}/>
+                 <WorkoutTable 
+                    workouts={workouts} 
+                    editUpdateWorkout={editUpdateWorkout}
+                    updateOn={updateOn} 
+                    fetchWorkouts={fetchWorkouts}
+                    token={props.token}
+                 />
               </Col>
-              {updateActive ? <WorkoutEdit workoutToUpdate={workoutToUpdate}
-              updateOff={updateOff} token={props.token} fetchWorkouts={fetchWorkouts}/> : <></>}
+              {updateActive ? 
+                <WorkoutEdit 
+                    workoutToUpdate={workoutToUpdate}
+                    updateOff={updateOff} 
+                    token={props.token} 
+                    fetchWorkouts={fetchWorkouts}
+                /> : <></>}
           </Row>
       </Container>
     )

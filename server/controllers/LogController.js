@@ -36,7 +36,7 @@ module.exports = {
                 description: request.body.description,
                 definition: request.body.definition,
                 result: request.body.result,
-                owner_id: request.body.owner_id,
+                owner_id: request.user.id,
             }).then((log) => {
                 console.log('Log created', { id: log.id })
                 response.status(200).send({

@@ -1,20 +1,18 @@
 import React from 'react';
 import {Table, Button} from 'reactstrap';
+import ApiProvider from '../utils/ApiProvider';
 
 const WorkoutTable = (props) => {
+    
     const deleteWorkout = (workout) => {
-        fetch(`http://localhost:3000/log/${workout.id}`, {
-            method: 'DELETE',
-            headers: new Headers({
-                'Content-Type' : 'application/json',
-                'Authorization' : props.token
+        ApiProvider.delete(`/log/${workout.id}`)   
+            .then(() => {
+                props.fetchWorkouts()
             })
-        })
-        .then(() => props.fetchWorkouts())
     }
 
     const workoutMapper = (props)  => {
-        console.log(props)
+
         return props.workouts.map((workout, index) => {
             return(
                 <tr key={index}>
@@ -23,7 +21,10 @@ const WorkoutTable = (props) => {
                     <td>{workout.description}</td>
                     <td>{workout.definition}</td>
                     <td>
-                        <Button color="warning" onClick={() => {props.updateOn()}}>Update</Button>
+                        <Button color="warning" onClick={() => {
+                            props.editUpdateWorkout(workout)
+                            props.updateOn()
+                        }}>Update</Button>
                         <Button onClick={() => {deleteWorkout(workout)}}>Delete</Button>
                     </td>
                 </tr>
@@ -33,21 +34,21 @@ const WorkoutTable = (props) => {
     
     return(
         <>
-        <h3>Workout History</h3>
-        <hr/>
-        <Table striped>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Result</th>
-                    <th>Description</th>
-                    <th>Definition</th>
-                </tr>
-            </thead>
-            <tbody>
-                {workoutMapper(props)}
-            </tbody>
-        </Table>
+            <h3>Workout History</h3>
+            <hr/>
+            <Table striped>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Result</th>
+                        <th>Description</th>
+                        <th>Definition</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {workoutMapper(props)}
+                </tbody>
+            </Table>
         </>
     )
 }

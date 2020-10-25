@@ -9,7 +9,7 @@ module.exports = function(request, response, next) {
         next()
     } else {
         console.log('### validate :: method IS NOT OPTIONS')
-        const sessionToken = request.headers.authorization;
+        const sessionToken = request.headers.token;
         console.log('### validate :: Validate Session', { sessionToken })
         if (!sessionToken) {
             return response.status(403).send({ auth: false, message: "No token provided."});
