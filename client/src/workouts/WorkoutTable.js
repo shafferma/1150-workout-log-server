@@ -12,24 +12,24 @@ const WorkoutTable = (props) => {
         })
         .then(() => props.fetchWorkouts())
     }
-}
-const workoutMapper = ()  => {
-    return props.workouts.map((workout, index) => {
-        return(
-            <tr key={index}>
-                <th scope="row">{workout.id}</th>
-                <td>{workout.result}</td>
-                <td>{workout.description}</td>
-                <td>{workou.definition}</td>
-                <td>
-                    <Button color="warning">Update</Button>
-                    <Button onClick={() => {deleteWorkout(workout)}}>Delete</Button>
-                </td>
-            </tr>
-        )
-    })
-};
-const WorkoutTable = (props) => {
+
+    const workoutMapper = (props)  => {
+        return props.workouts.map((workout, index) => {
+            return(
+                <tr key={index}>
+                    <th scope="row">{workout.id}</th>
+                    <td>{workout.result}</td>
+                    <td>{workout.description}</td>
+                    <td>{workout.definition}</td>
+                    <td>
+                        <Button color="warning">Update</Button>
+                        <Button onClick={() => {deleteWorkout(workout)}}>Delete</Button>
+                    </td>
+                </tr>
+            )
+        })
+    };
+    
     return(
         <>
         <h3>Workout History</h3>

@@ -29,3 +29,5 @@ const WorkoutCreate = (props) => {
         <p>Workout Create Comp</p>
     )
 }
+
+export default WorkoutCreate;

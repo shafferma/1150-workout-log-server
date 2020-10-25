@@ -1,4 +1,3 @@
-import React from 'react';
 import React, {useState, useEffect} from 'react';
 import {Container, Row, Col, Button} from 'reactstrap';
 import WorkoutCreate from './WorkoutCreate';
@@ -7,14 +6,12 @@ import WorkoutEdit from './WorkoutEdits';
 
 const WorkoutIndex = (props) => {
     
-    const WorkoutIndex = (props) => {
-        const [workouts, setWorkouts] = useState([]);
-    }
+    const [workouts, setWorkouts] = useState([]);
 
     const fetchWorkouts = () => {
         fetch('http://localhost:3000/log', {
             method: 'GET',
-            headers= new Headers ({
+            headers: new Headers ({
                 'Content-Type' : 'application/json',
                 'Authorization': props.token
             })
