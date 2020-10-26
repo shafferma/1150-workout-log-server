@@ -17,9 +17,11 @@ const Sitebar = (props) => {
             <NavbarToggler onClick={toggle}/>
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="ml-auto" navbar>
-                    <NavItem>
-                        <Button onClick={props.clickLogout}>Logout</Button>
-                    </NavItem>
+                    {props.isLoggedIn ?
+                        <NavItem>
+                            <Button onClick={props.clickLogout}>Logout</Button>
+                        </NavItem>
+                    : null }
                 </Nav>
             </Collapse>
         </Navbar>

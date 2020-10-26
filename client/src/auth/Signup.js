@@ -5,16 +5,21 @@ import ApiProvider from '../utils/ApiProvider';
 const Signup = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(false);
 
     let handleSubmit = (event) => {
         event.preventDefault();
-        ApiProvider.post('/user/login', {
+        //reset error to false when resubmitting
+        setError(false)
+        ApiProvider.post('/user/register', {
             user: { 
                 username,
                 password
             }
         }).then((response) => {
             props.updateToken(response.data.sessionToken)
+        }).catch(error => {
+            setError(error.response.data);
         })
     }
 
@@ -31,6 +36,9 @@ const Signup = (props) => {
                     <Input onChange={(e) => setPassword(e.target.value)} name="password" type="password" value={password}/>
                 </FormGroup>
                 <Button type="submit">Signup</Button>
+                {error ?
+                    <p style={{color:"red" }}>{error}</p>
+                : null}
             </Form>
         </div>
     )

@@ -41,7 +41,6 @@ const WorkoutIndex = (props) => {
               <Col md="3">
                  <WorkoutCreate 
                     fetchWorkouts={fetchWorkouts} 
-                    token={props.token}
                  />
               </Col>
               <Col md="9">
@@ -50,14 +49,12 @@ const WorkoutIndex = (props) => {
                     editUpdateWorkout={editUpdateWorkout}
                     updateOn={updateOn} 
                     fetchWorkouts={fetchWorkouts}
-                    token={props.token}
                  />
               </Col>
               {updateActive ? 
                 <WorkoutEdit 
                     workoutToUpdate={workoutToUpdate}
                     updateOff={updateOff} 
-                    token={props.token} 
                     fetchWorkouts={fetchWorkouts}
                 /> : <></>}
           </Row>

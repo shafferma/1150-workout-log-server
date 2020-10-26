@@ -24,10 +24,6 @@ const WorkoutEdit = (props) => {
           <ModalHeader>Log a Workout</ModalHeader>
           <ModalBody>
               <Form onSubmit={workoutUpdate}>
-                  <FormGroup>
-                      <Label htmlFor="result">Edit Result:</Label>
-                      <Input name="result" value={editRes} onChange={(e) => setEditRes(e.target.value)}/>
-                    </FormGroup>
                     <FormGroup>
                         <Label htmlFor="description">Edit Description:</Label>
                         <Input name="description" value={editDesc} onChange={(e) => setEditDesc(e.target.value)}/>
@@ -40,6 +36,10 @@ const WorkoutEdit = (props) => {
                         <option value="Weight">Weight</option>
                         <option value="Distance">Distance</option>
                         </Input>
+                    </FormGroup>
+                    <FormGroup>
+                      <Label htmlFor="result">Edit Result:</Label>
+                      <Input name="result" value={editRes} onChange={(e) => setEditRes(e.target.value)}/>
                     </FormGroup>
                     <Button type="Submit">Update the workout!</Button>
               </Form>

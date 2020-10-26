@@ -25,14 +25,15 @@ const clearToken = () => {
 }
 
 const protectedViews = () => {
-  return (sessionToken === localStorage.getItem('token') ? <WorkoutIndex token={sessionToken}/>
+  return (sessionToken === localStorage.getItem('token') ? <WorkoutIndex/>
   : <Auth updateToken={updateToken}/>) 
 }
 
   return (
     <div>
-      <SiteBar clickLogout={clearToken} />
-      {protectedViews()} 
+      {/* use !! to make sessionToken a truthy value ; returns true or false */}
+      <SiteBar isLoggedIn={!!sessionToken} clickLogout={clearToken} />
+      {protectedViews()}  
     </div>
   );
 }

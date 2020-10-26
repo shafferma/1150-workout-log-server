@@ -5,37 +5,56 @@ const Password = require("../utls/password")
 
 module.exports = {
     register: function(request, response) {
-        console.log('register 1')
         // we wrap our code in a try/catch incase the request doesn't contain a user object
         try {
             const {username, password} = request.body.user
+
             //user did not provide their username and password
             if (!username || !password) {
-                console.log('register 2')
-                response.send(400, "Provide username and password")
+                response.status(400).send("Provide username and password")
+                return
             }
 
-            console.log('register 3')
-            User.create({
-                username: username,
-                passwordhash: Password.hash(password)
-            }).then((user) => {
-                // generate a session token using the newly created user object
-                const token = Session.generateToken(user)
+            //check if username already exists
+            let userExists = false
+            User.findOne({
+                where: {
+                    username
+                }
+            }).then(user => {
 
-                console.log('register 4')
-                
-                // respond to the request with the following info
-                response.send({
-                    user: user,
-                    message: "Account registered",
-                    sessionToken: token
+                // determine if the user exists for the given username
+                userExists = !!user
+    
+                // if username already exists, return an error
+                if (userExists) {
+                    console.log("user already exists")
+                    response.status(400).send("Username already exists")
+                    return
+                }
+    
+                // if username doesn't exist create user
+                User.create({
+                    username: username,
+                    passwordhash: Password.hash(password)
+                }).then((user) => {
+                    // generate a session token using the newly created user object
+                    const token = Session.generateToken(user)
+    
+                    // respond to the request with the following info
+                    response.status(200).send({
+                        user: user,
+                        message: "Account registered",
+                        sessionToken: token
+                    })
+                    return
                 })
             })
 
         } catch(error) {
-            console.log('register 5')
+            console.log("create user error", error)
             response.send(500, "Error")
+            return
         }
     }
 }

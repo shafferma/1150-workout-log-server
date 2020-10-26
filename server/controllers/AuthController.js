@@ -16,14 +16,20 @@ module.exports = {
                     username: username
                 }
             }).then((user) => {
-                console.log("Found User")
+                console.log("Found User", user)
+                // if no user respond with incorrect credts.
+                if (!user) {
+                    response.status(401).send(INCORRECT_CREDENTIALS)
+                    return 
+                }
 
                 // check that the user provided the correct password
                 Password.compare(password, user.passwordhash)
                     .then((isSamePassword) => {
                         console.log('Check provided password', {isSamePassword})
                         if (!isSamePassword) {
-                            response.send(401).send(INCORRECT_CREDENTIALS)
+                            response.status(401).send(INCORRECT_CREDENTIALS)
+                            return
                         }
 
                         // logic to handle the token and response

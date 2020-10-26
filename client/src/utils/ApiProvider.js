@@ -18,6 +18,7 @@ const ApiProvider = axios.create({
 
  ApiProvider.interceptors.request.use(config => {
     const token = localStorage.getItem('token')
+    // if toke exists we attach to outgoing request
     if (token) {
         config.headers['token'] = token
     }
