@@ -1,6 +1,6 @@
 const Session = require("../utls/session");
 const DB = require("../db");
-const User = DB.import("../model/user"); 
+const User = DB.import("../models/user"); 
 
 module.exports = function(request, response, next) {
     console.log('### validate :: start')

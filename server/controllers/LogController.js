@@ -1,5 +1,5 @@
 const DB = require("../db")
-const Log = DB.import("../model/log");
+const Log = DB.import("../models/log");
 
 
 // handles our "Log logic"

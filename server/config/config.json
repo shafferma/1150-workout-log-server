@@ -1,0 +1,28 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "Goku1koji2",
+    "database": "workoutlog",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "dialect": "postgres",
+    "seederStorage": "sequelize",
+    "seederStorageTableName": "sequelize_data"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "Goku1koji2",
+    "database": "workoutlog",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Goku1koji2",
+    "database": "workoutlog",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "dialect": "postgres"
+  }
+}

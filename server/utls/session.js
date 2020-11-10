@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 const DB = require("../db");
-const User = DB.import("../model/user"); 
+const User = DB.import("../models/user"); 
 
 module.exports = {
     // generates a token we can give to the User for handling authentication

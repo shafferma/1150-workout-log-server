@@ -1,5 +1,5 @@
 const DB = require("../db")
-const User = DB.import("../model/user")
+const User = DB.import("../models/user")
 const Session = require("../utls/session")
 const Password = require("../utls/password")
 
